@@ -3,12 +3,19 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import './ElevatorPanel.css';
 import { Card, withStyles } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { pressFloor } from '../../actions/elevator';
 
 const styles = {
   card: {
-    width: 345,
-    height: 700
-
+    padding: '0 70px'
+  },
+  buttonGlow: {
+    background: 'red',
+    '&:hover': {
+      background: '#ce0000'
+    }
   },
   media: {
     height: 140
@@ -19,7 +26,7 @@ class ElevatorPanel extends React.Component {
   props: any;
 
   render() {
-    const { classes } = this.props;
+    const { classes, pressFloor: pressFloorAction } = this.props;
     return <Card className={classes.card}>
       <h1>
         hello!
@@ -29,44 +36,26 @@ class ElevatorPanel extends React.Component {
       </Button>
       <div className='btns-group'>
       {
-        new Array(4).fill(null).map((value, index) => (
+        Array.from(new Array(5).keys()).reverse().map((floor) => (
 
-        <Button variant="fab" color="primary" aria-label="Add">
-          {index + 1}
+        <Button variant="fab"
+                color="primary"
+                className={(floor) === this.props.floor ? classes.buttonGlow : ''}
+                onClick={() => pressFloorAction(floor)}
+                key={floor}>
+          {floor}
         </Button>
         ))
       }
       </div>
-      {/*<CardActionArea>*/}
-      {/*<CardMedia*/}
-      {/*className={classes.media}*/}
-      {/*image="/static/images/cards/contemplative-reptile.jpg"*/}
-      {/*title="Contemplative Reptile"*/}
-      {/*/>*/}
-      {/*<CardContent>*/}
-      {/*<Typography gutterBottom variant="h5" component="h2">*/}
-      {/*Lizard*/}
-      {/*</Typography>*/}
-      {/*<Typography component="p">*/}
-      {/*Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging*/}
-      {/*across all continents except Antarctica*/}
-      {/*</Typography>*/}
-      {/*</CardContent>*/}
-      {/*</CardActionArea>*/}
-      {/*<CardActions>*/}
-      {/*<Button size="small" color="primary">*/}
-      {/*Share*/}
-      {/*</Button>*/}
-      {/*<Button size="small" color="primary">*/}
-      {/*Learn More*/}
-      {/*</Button>*/}
-      {/*</CardActions>*/}
     </Card>;
-
-    //   <div className={'panel'}>
-    //
-    // </div>;
   }
 }
 
-export default withStyles(styles)(ElevatorPanel);
+const mapStateToProps = state => ({
+  floor: state.elevator.floor
+});
+
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ pressFloor }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ElevatorPanel));
