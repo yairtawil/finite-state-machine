@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "lib": [
+      "dom",
       "es2018"
     ]
   },

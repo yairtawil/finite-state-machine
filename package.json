@@ -15,11 +15,13 @@
     "redux": "^4.0.1"
   },
   "scripts": {
+    "build-lib": "npm run build --prefix src/lib",
+    "watch-lib": "npm run build-lib -- -- -w",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
-    "start": "npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && react-scripts-ts build",
+    "start": "npm-run-all -p watch-lib watch-css start-js",
+    "build": "npm run build-lib && npm run build-css && react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },

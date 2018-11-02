@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "rootDir": ".",
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
+    "paths": {
+      "finite-state-machine": ["src/lib"]
+    },
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

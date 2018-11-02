@@ -3,10 +3,12 @@ import './App.css';
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
+import { FiniteStateMachine } from 'finite-state-machine';
 
 
 class App extends React.Component {
   public render() {
+    const a = new FiniteStateMachine({});
     return (
       <div className="App">
         <Header/>
