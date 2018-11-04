@@ -6,6 +6,10 @@ import { Card, withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { pressFloor } from '../../actions/elevator';
+import { IState } from '../../reducers';
+import { config } from '../../config/config';
+import { IFloor } from '../../model/building';
+import GlowButton from '../GlowButton/GlowButton';
 
 const styles = {
   card: {
@@ -22,38 +26,37 @@ const styles = {
   }
 };
 
-class ElevatorPanel extends React.Component {
-  props: any;
-
-  render() {
-    const { classes, pressFloor: pressFloorAction } = this.props;
-    return <Card className={classes.card}>
-      <h1>
-        hello!
-      </h1>
-      <Button variant="fab" color="primary" aria-label="Add">
-        <AddIcon/>
-      </Button>
-      <div className='btns-group'>
+const ElevatorPanel = ({ classes, pressFloor: _pressFloor, floor, selectedBuilding }) => {
+  const building = config.buildings[selectedBuilding];
+  return <Card className={classes.card}>
+    <h1>
+      hello!
+    </h1>
+    <GlowButton/>
+    <Button variant="fab" color="primary" aria-label="Add">
+      <AddIcon/>
+    </Button>
+    <div className='btns-group'>
       {
-        Array.from(new Array(5).keys()).reverse().map((floor) => (
+        [...building.floors].reverse()
+          .map(({ floor: _floor }: IFloor) => (
 
-        <Button variant="fab"
-                color="primary"
-                className={(floor) === this.props.floor ? classes.buttonGlow : ''}
-                onClick={() => pressFloorAction(floor)}
-                key={floor}>
-          {floor}
-        </Button>
+          <Button variant="fab"
+                  color="primary"
+                  className={_floor === floor ? classes.buttonGlow : ''}
+                  onClick={() => _pressFloor(_floor)}
+                  key={_floor}>
+            {_floor}
+          </Button>
         ))
       }
-      </div>
-    </Card>;
-  }
-}
+    </div>
+  </Card>;
+};
 
-const mapStateToProps = state => ({
-  floor: state.elevator.floor
+const mapStateToProps = (state: IState) => ({
+  floor: state.elevator.floor,
+  selectedBuilding: state.elevator.selectedBuilding
 });
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ pressFloor }, dispatch);
