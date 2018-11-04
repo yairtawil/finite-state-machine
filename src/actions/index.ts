@@ -1,3 +1,9 @@
-import { IElevatorAction } from './elevator';
+import { ElevatorAction } from './elevator';
+import { BuildingAction } from './building';
+import { Action } from 'redux';
 
-export type Actions = IElevatorAction;
+export interface IAction<T, P> extends Action<T> {
+  payload?: P
+}
+
+export type Actions = ElevatorAction | BuildingAction;

@@ -9,7 +9,6 @@ import { pressFloor } from '../../actions/elevator';
 import { IState } from '../../reducers';
 import { config } from '../../config/config';
 import { IFloor } from '../../model/building';
-import GlowButton from '../GlowButton/GlowButton';
 
 const styles = {
   card: {
@@ -26,29 +25,31 @@ const styles = {
   }
 };
 
-const ElevatorPanel = ({ classes, pressFloor: _pressFloor, floor, selectedBuilding }) => {
-  const building = config.buildings[selectedBuilding];
+const ElevatorPanel = ({ classes, pressFloor: _pressFloor, floor, selected, buildings }) => {
+  const building = buildings[ selected ];
+  if (!building ) {
+    return null;
+  }
   return <Card className={classes.card}>
     <h1>
       hello!
     </h1>
-    <GlowButton/>
     <Button variant="fab" color="primary" aria-label="Add">
       <AddIcon/>
     </Button>
     <div className='btns-group'>
       {
-        [...building.floors].reverse()
+        [ ...building.floors ].reverse()
           .map(({ floor: _floor }: IFloor) => (
 
-          <Button variant="fab"
-                  color="primary"
-                  className={_floor === floor ? classes.buttonGlow : ''}
-                  onClick={() => _pressFloor(_floor)}
-                  key={_floor}>
-            {_floor}
-          </Button>
-        ))
+            <Button variant="fab"
+                    color="primary"
+                    className={_floor === floor ? classes.buttonGlow : ''}
+                    onClick={() => _pressFloor(_floor)}
+                    key={_floor}>
+              {_floor}
+            </Button>
+          ))
       }
     </div>
   </Card>;
@@ -56,7 +57,8 @@ const ElevatorPanel = ({ classes, pressFloor: _pressFloor, floor, selectedBuildi
 
 const mapStateToProps = (state: IState) => ({
   floor: state.elevator.floor,
-  selectedBuilding: state.elevator.selectedBuilding
+  selected: state.building.selected,
+  buildings: state.building.buildings
 });
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ pressFloor }, dispatch);

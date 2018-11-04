@@ -7,6 +7,11 @@ import { FiniteStateMachine } from 'finite-state-machine';
 
 
 class App extends React.Component {
+
+  constructor(...args) {
+    super(args);
+  }
+
   public render() {
     const a = new FiniteStateMachine({});
     return (

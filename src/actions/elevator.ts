@@ -1,13 +1,12 @@
+import { IAction } from './index';
+
 export enum ElevatorActionTypes {
   PRESS_FLOOR = 'PRESS'
 }
 
-export interface IElevatorAction<P = any> {
-  readonly type: ElevatorActionTypes;
-  payload?: P;
-}
+export type ElevatorAction<P = any> = IAction<ElevatorActionTypes, P>;
 
-export const pressFloor = (floor: number): IElevatorAction<typeof floor> => ({
+export const pressFloor = (floor: number): ElevatorAction<typeof floor> => ({
   type: ElevatorActionTypes.PRESS_FLOOR,
   payload: floor
 });

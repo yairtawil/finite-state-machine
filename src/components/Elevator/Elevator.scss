@@ -1,22 +1,10 @@
-div.building-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  .elevator {
-    width: 48px;
-    height: 48px;
-    position: absolute;
-    z-index: 2;
-    bottom: 67px;
-    img {
-      background: white;
-    }
+.elevator {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  z-index: 2;
+  bottom: 67px;
+  img {
+    background: white;
   }
-
-  .building {
-    width: 500px;
-    height: 500px;
-    position: relative;
-  }
-
 }

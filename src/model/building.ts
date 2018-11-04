@@ -4,6 +4,7 @@ export interface IFloor {
 }
 
 export interface IBuilding {
+  imageUrl: string;
   name: string;
   floors: IFloor[];
 }
